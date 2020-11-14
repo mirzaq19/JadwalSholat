@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, StatusBar, StyleSheet, Image } from 'react-native';
+import { View, Text, StatusBar, StyleSheet, Image, Button } from 'react-native';
 
 const Home = (props) => {
     const fetchJadwalSholat = async () => {
@@ -10,7 +10,7 @@ const Home = (props) => {
             let responseJson = await response.json();
             if (responseJson) {
                 setSholatTiming(responseJson.data[0].timings);
-                // console.log('sholat timings ->', responseJson.data[0].timings);
+                console.log('sholat timings ->', responseJson.data[0].timings);
             }
         } catch (error) {
             console.log('error ->', error);
@@ -23,7 +23,7 @@ const Home = (props) => {
     }, []);
 
     const renderJadwalSholat = (title, time) => (
-        <>
+        <View>
             <View
                 style={{
                     flexDirection: 'row',
@@ -36,7 +36,7 @@ const Home = (props) => {
                 <Text style={{ flex: 1, color: 'gray' }}>{title}</Text>
                 <Text style={{ color: 'gray' }}>{time}</Text>
             </View>
-        </>
+        </View>
     );
     return (
         <View>
@@ -54,11 +54,14 @@ const Home = (props) => {
             {renderJadwalSholat('Ashar', sholatTiming.Asr)}
             {renderJadwalSholat('Maghrib', sholatTiming.Maghrib)}
             {renderJadwalSholat("Isya'", sholatTiming.Isha)}
-            <Text 
-                style={styles.tentangkami}
-                onPress={() => props.navigation.navigate('TentangKami')}>
-                {'Tentang Kami'}
-            </Text>
+            {/* <View>
+                <View style={styles.tentangkami}>
+                    <Text style={styles.texttk} onPress={() => props.navigation.navigate('TentangKami')}>{'Tentang Kami'}</Text>
+                </View>
+            </View> */}
+            <View style={styles.tentangkami}>
+                <Button onPress={()=>props.navigation.navigate('TentangKami')} title="Tentang Kami"></Button>
+            </View>
         </View>
     );
 }
@@ -77,13 +80,15 @@ const styles = StyleSheet.create({
         fontWeight: 'bold'
     },
     tentangkami:{
-        position: 'relative',
-        left: '38%',
-        marginTop:32,
-        color:'gray',
-        fontWeight:'bold',
+        flex:1,
         alignItems: 'center',
-        justifyContent:'center'
+        justifyContent:'center',
+        marginTop: 25
+    },
+    texttk:{
+        color: 'white',
+        fontWeight: 'bold',
+        fontSize: 16
     }
 });
 
