@@ -1,15 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, StatusBar, StyleSheet, Image, Button } from 'react-native';
+import { View, Text, StatusBar, StyleSheet, Image, Button, SafeAreaView } from 'react-native';
 import moment from 'moment';
 
 const Home = (props) => {
 
     const getTime = () => {
         return moment().format('DD MMMM YYYY, h:mm a');
-    }
-
-    const testing = () => {
-        return moment().startOf('hour').fromNow();
     }
 
     const fetchJadwalSholat = async () => {
@@ -20,7 +16,7 @@ const Home = (props) => {
             let responseJson = await response.json();
             if (responseJson) {
                 setSholatTiming(responseJson.data[0].timings);
-                console.log('sholat timings ->', responseJson.data[0].timings);
+                // console.log('sholat timings ->', responseJson.data[0].timings);
             }
         } catch (error) {
             console.log('error ->', error);
@@ -49,34 +45,47 @@ const Home = (props) => {
         </View>
     );
     return (
-        <View>
-            <StatusBar backgroundColor={'#2b8be7'} />
-            <View style={styles.banner}>
-                <Image
-                    source={require('../back.jpg')}
-                    style={{ height: 150, width: '100%', opacity: 0.5 }}
-                />
-                <View style={{position:'absolute'}}>
-                    <Text style={styles.tbanner} >{'Halo Kawan'}</Text>
-                    <Text style={styles.tbanner} >{getTime()}</Text>
-                    {/* <Text style={styles.tbanner} >{testing()}</Text> */}
+        <SafeAreaView>
+            <View>
+                <StatusBar backgroundColor={'#2b8be7'} />
+                <View style={styles.banner}>
+                    <Image
+                        source={require('../back.jpg')}
+                        style={{ height: 150, width: '100%', opacity: 0.45 }}
+                    />
+                    <View style={{position:'absolute'}}>
+                        <Text style={styles.tbanner} >{'Halo Kawan, '}</Text>
+                        <Text style={styles.tbanner} >{getTime()}</Text>
+                        <View style={{width:'90%'}}>
+                            <Text style={{marginLeft: 16, marginTop:10,color: 'white',fontSize: 14}}>
+                                {'"Amalan yang paling dicintai Allah adalah salat tepat pada waktunya, berbakti pada orang tua, dan jihad di jalan Allah."'}
+                            </Text>
+                            <Text style={{marginLeft: 16,color: 'white',fontSize: 14, fontWeight:'700'}}>
+                                {'~Imam Al-Bukhari dan Muslim'}
+                            </Text>
+                        </View>
+                    </View>
                 </View>
-            </View>
-            {renderJadwalSholat('Subuh', sholatTiming.Fajr)}
-            {renderJadwalSholat('Sunrise', sholatTiming.Sunrise)}
-            {renderJadwalSholat('Dzuhur', sholatTiming.Dhuhr)}
-            {renderJadwalSholat('Ashar', sholatTiming.Asr)}
-            {renderJadwalSholat('Maghrib', sholatTiming.Maghrib)}
-            {renderJadwalSholat("Isya'", sholatTiming.Isha)}
-            {/* <View>
+                {renderJadwalSholat('Subuh', sholatTiming.Fajr)}
+                {renderJadwalSholat('Sunrise', sholatTiming.Sunrise)}
+                {renderJadwalSholat('Dzuhur', sholatTiming.Dhuhr)}
+                {renderJadwalSholat('Ashar', sholatTiming.Asr)}
+                {renderJadwalSholat('Maghrib', sholatTiming.Maghrib)}
+                {renderJadwalSholat("Isya'", sholatTiming.Isha)}
+                {/* <View>
+                    <View style={styles.tentangkami}>
+                        <Text style={styles.texttk} onPress={() => props.navigation.navigate('TentangKami')}>{'Tentang Kami'}</Text>
+                    </View>
+                </View> */}
                 <View style={styles.tentangkami}>
-                    <Text style={styles.texttk} onPress={() => props.navigation.navigate('TentangKami')}>{'Tentang Kami'}</Text>
+                    <Button 
+                        title="Tentang Kami" 
+                        color="#2b8be7" 
+                        onPress={()=>props.navigation.navigate('TentangKami')}
+                    />
                 </View>
-            </View> */}
-            <View style={styles.tentangkami}>
-                <Button onPress={()=>props.navigation.navigate('TentangKami')} title="Tentang Kami"></Button>
             </View>
-        </View>
+        </SafeAreaView>
     );
 }
 const styles = StyleSheet.create({
@@ -93,15 +102,10 @@ const styles = StyleSheet.create({
         fontWeight: 'bold'
     },
     tentangkami:{
-        flex:1,
-        alignItems: 'center',
+        display: 'flex',
         justifyContent:'center',
+        alignItems: 'center',
         marginTop: 25
-    },
-    texttk:{
-        color: 'white',
-        fontWeight: 'bold',
-        fontSize: 16
     }
 });
 
