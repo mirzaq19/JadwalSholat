@@ -1,7 +1,17 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, StatusBar, StyleSheet, Image, Button } from 'react-native';
+import moment from 'moment';
 
 const Home = (props) => {
+
+    const getTime = () => {
+        return moment().format('DD MMMM YYYY, h:mm a');
+    }
+
+    const testing = () => {
+        return moment().startOf('hour').fromNow();
+    }
+
     const fetchJadwalSholat = async () => {
         try {
             const apiName =
@@ -46,7 +56,11 @@ const Home = (props) => {
                     source={require('../back.jpg')}
                     style={{ height: 150, width: '100%', opacity: 0.5 }}
                 />
-                <Text style={styles.tbanner} >{'Halo, kawan'}</Text>
+                <View style={{position:'absolute'}}>
+                    <Text style={styles.tbanner} >{'Halo Kawan'}</Text>
+                    <Text style={styles.tbanner} >{getTime()}</Text>
+                    {/* <Text style={styles.tbanner} >{testing()}</Text> */}
+                </View>
             </View>
             {renderJadwalSholat('Subuh', sholatTiming.Fajr)}
             {renderJadwalSholat('Sunrise', sholatTiming.Sunrise)}
@@ -70,10 +84,9 @@ const styles = StyleSheet.create({
         height: 150,
         width: '100%',
         backgroundColor: '#2b8be7',
-        justifyContent: 'center'
+        justifyContent: 'center',
     },
     tbanner: {
-        position: 'absolute',
         marginLeft: 16,
         color: 'white',
         fontSize: 21,
