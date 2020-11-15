@@ -67,7 +67,7 @@ const Home = (props) => {
                     </View>
                 </View>
                 {renderJadwalSholat('Subuh', sholatTiming.Fajr)}
-                {renderJadwalSholat('Sunrise', sholatTiming.Sunrise)}
+                {renderJadwalSholat('Terbit', sholatTiming.Sunrise)}
                 {renderJadwalSholat('Dzuhur', sholatTiming.Dhuhr)}
                 {renderJadwalSholat('Ashar', sholatTiming.Asr)}
                 {renderJadwalSholat('Maghrib', sholatTiming.Maghrib)}
